@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+
+<body onload="isValidCard()">
+
+<p style="text-align:center; margin-top:120px; font-size:20px;" id="cc"></p>
+
+<script>
+function isValidCard() {
+   //creo una variable tarjetaDecredito que genera un prompt de javascript para ingresar los numeros de la tarjeta de credito que el usuario indique.
+   var tarjetaDecredito = prompt("Ingresa un número de tarjeta de crédito de 12 dígitos", "3567892802675438");
+   //creo variable numSum e igualo a 0 la cual almacenará la sumatoria de los cálculos de cada uno de los dígitos de la tarjeta de crédito según el algoritmo de Luhn
+   var numSum = 0;
+   //  se declaro una  variable  para realizar cálculos de cada dígito
+   var value;
+   //genero un ciclo for, el cual recorrerá cada uno de los 16 dígitos de mi tarjeta de credito y calculará su validez en base al algoritmo de Luhn
+   for (var i = 0; i < 12; ++i) {
+       //si i es divisible por dos osea si es un numero par...
+       if (i % 2 == 0) {
+           // la variable value será igual a 2 multiplicado por uno de los 16 numeros de la tarjeta de credito (ciclo se realizará 16 veces) tarjetaDecredito[i] equivale a cada uno de los numeros del la tarjeta de crédito
+           value = 2 *tarjetaDecredito [i];
+           // si el valor de value es mayor o igual a 10
+           if (value >= 10) {
+               //value será igual a value divido en 10 y aproximado a su entero mas cercano hacia abajo + el módulo de value en 10 ej: si value es 11: 11 / 10 = 1.1 esto aproximado a 1 por el Math.floor es 1 + el modulo 10 de value que es 1 da un valor de 2. value = 2
+               value = (Math.floor(value / 10) + value % 10);
+           }
+           // si i no es par...
+       } else {
+           //value es igual a uno de los dígitos de la tarjeta segun el ciclo for
+           value = +tarjetaDecredito[i];
+       }
+       //finalmente a la variable numSum le sumamos el valor de cada uno de los digitos en cada uno de los 16 ciclos.
+       numSum += value;
+   }
+   //ahora estamos fuera del ciclo con el calculo realizado según Luhn. declaro variable resultado e igual a lo siguiente respuesta de condicional: si modulo 10 de numSum es igual a 0 (numSum/10 da resto 0) la tarjeta es valida, sino es invalida.
+   var resultado = (numSum % 10 == 0);
+   //valido si numSum es 0 o no y escribo en pantalla el mensaje
+   if (resultado == true) {
+       document.getElementById("cc").innerHTML =
+       "La tarjeta "+tarjetaDecredito+" es válida! :)";
+   }else if (resultado == false) {
+       document.getElementById("cc").innerHTML =
+       "La tarjeta "+tarjetaDecredito+" es inválida! :(";
+   }
+}
+</script>
+
+</body>
+</html>
